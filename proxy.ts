@@ -1,15 +1,24 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { cookies } from 'next/headers';
+import { checkSession } from '@/lib/api/serverApi';
 
 const privateRoutes = ['/profile', '/notes'];
 const authRoutes = ['/sign-in', '/sign-up'];
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const cookieStore = await cookies();
 
-  const accessToken = request.cookies.get('accessToken')?.value;
-  const refreshToken = request.cookies.get('refreshToken')?.value;
-  const isAuthenticated = !!accessToken || !!refreshToken;
+  const accessToken = cookieStore.get('accessToken')?.value;
+  const refreshToken = cookieStore.get('refreshToken')?.value;
+
+  let isAuthenticated = !!accessToken;
+
+  if (!accessToken && refreshToken) {
+    const sessionResponse = await checkSession();
+    isAuthenticated = sessionResponse.status === 200;
+  }
 
   const isPrivateRoute = privateRoutes.some((route) => pathname.startsWith(route));
   const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route));

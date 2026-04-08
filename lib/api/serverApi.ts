@@ -2,6 +2,7 @@ import { api } from './api';
 import { cookies } from 'next/headers';
 import type { Note, NoteTag } from '@/types/note';
 import type { User } from '@/types/user';
+import type { AxiosResponse } from 'axios';
 
 export interface FetchNotesParams {
   page?: number;
@@ -51,12 +52,8 @@ export const getMe = async (): Promise<User | null> => {
   }
 };
 
-export const checkSession = async (): Promise<boolean> => {
-  try {
-    const headers = await getAuthHeaders();
-    const response = await api.get('/auth/session', { headers });
-    return response.status === 200;
-  } catch {
-    return false;
-  }
+export const checkSession = async (): Promise<AxiosResponse> => {
+  const headers = await getAuthHeaders();
+  const response = await api.get('/auth/session', { headers });
+  return response;
 };
