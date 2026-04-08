@@ -1,0 +1,23 @@
+
+.mainContent { flex: 1; display: flex; justify-content: center; align-items: center; padding: 32px; }
+
+.form { display: flex; flex-direction: column; gap: 16px; max-width: 400px; width: 100%; padding: 32px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+.formTitle { font-size: 24px; font-weight: 700; text-align: center; margin-bottom: 16px; }
+
+.formGroup { display: flex; flex-direction: column; gap: 4px; }
+
+.formGroup label { font-weight: 500; }
+
+.input { padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px; }
+
+.actions { margin-top: 16px; }
+
+.submitButton { width: 100%; padding: 12px; background: #0d6efd; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
+
+.submitButton:hover { background: #0b5ed7; }
+
+.submitButton:disabled { background: #ccc; }
+
+.error { color: red; text-align: center; margin-top: 8px; }
+

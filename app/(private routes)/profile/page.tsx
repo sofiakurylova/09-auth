@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getMeServer } from "@/lib/api/serverApi";
+import { getMe } from "@/lib/api/serverApi";
 import css from "./Profile.module.css";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ProfilePage() {
-  const user = await getMeServer();
+  const user = await getMe();
 
   return (
     <main className={css.mainContent}>
