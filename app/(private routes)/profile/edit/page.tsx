@@ -51,7 +51,7 @@ export default function EditProfilePage() {
     return <main className={css.mainContent}><p>Loading...</p></main>;
   }
 
-  const avatarUrl = user?.avatar || 'https://ac.goit.global/fullstack/react/default-avatar.png'\;
+  const avatarUrl = user?.avatar || 'https://ac.goit.global/fullstack/react/default-avatar.png';
 
   return (
     <main className={css.mainContent}>
