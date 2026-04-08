@@ -1,12 +1,18 @@
-import { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { getMe } from "@/lib/api/serverApi";
-import css from "./Profile.module.css";
+import type { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { getMe } from '@/lib/api/serverApi';
+import css from './page.module.css';
 
 export const metadata: Metadata = {
-  title: "Profile | NoteHub",
-  description: "User profile page",
+  title: 'Profile | NoteHub',
+  description: 'View and manage your NoteHub profile.',
+  openGraph: {
+    title: 'Profile | NoteHub',
+    description: 'View and manage your NoteHub profile.',
+    url: 'https://notehub.app/profile',
+    images: ['https://ac.goit.global/fullstack/react/notehub-og-meta.jpg'],
+  },
 };
 
 export default async function ProfilePage() {
@@ -23,7 +29,7 @@ export default async function ProfilePage() {
         </div>
         <div className={css.avatarWrapper}>
           <Image
-            src={user?.avatar || "/default-avatar.png"}
+            src={user?.avatar || 'https://ac.goit.global/fullstack/react/default-avatar.png'\}
             alt="User Avatar"
             width={120}
             height={120}
@@ -31,8 +37,8 @@ export default async function ProfilePage() {
           />
         </div>
         <div className={css.profileInfo}>
-          <p>Username: {user?.username}</p>
-          <p>Email: {user?.email}</p>
+          <p>Username: {user?.username || 'Not set'}</p>
+          <p>Email: {user?.email || 'Not available'}</p>
         </div>
       </div>
     </main>

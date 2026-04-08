@@ -1,28 +1,35 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { login } from "@/lib/api/clientApi";
-import { useAuthStore } from "@/lib/store/authStore";
-import css from "./Auth.module.css";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { login } from '@/lib/api/clientApi';
+import { useAuthStore } from '@/lib/store/authStore';
+import css from './page.module.css';
 
 export default function SignInPage() {
-  const [error, setError] = useState("");
   const router = useRouter();
-  const setUser = useAuthStore((state) => state.setUser);
+  const { setUser } = useAuthStore();
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError('');
+    setIsLoading(true);
+
     const formData = new FormData(e.currentTarget);
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
 
     try {
       const user = await login({ email, password });
       setUser(user);
-      router.push("/profile");
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Login failed");
+      router.push('/profile');
+    } catch (err) {
+      setError('Invalid email or password');
+      console.error('Login error:', err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -39,7 +46,9 @@ export default function SignInPage() {
           <input id="password" type="password" name="password" className={css.input} required />
         </div>
         <div className={css.actions}>
-          <button type="submit" className={css.submitButton}>Log in</button>
+          <button type="submit" className={css.submitButton} disabled={isLoading}>
+            {isLoading ? 'Loading...' : 'Log in'}
+          </button>
         </div>
         {error && <p className={css.error}>{error}</p>}
       </form>
