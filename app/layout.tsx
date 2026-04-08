@@ -1,39 +1,33 @@
-import type { Metadata } from 'next';
-import { Roboto } from 'next/font/google';
-import { ReactNode } from 'react';
-import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
-import Header from '@/components/Header/Header';
-import Footer from '@/components/Footer/Footer';
-import './globals.css';
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import { AuthProvider } from "@/components/AuthProvider/AuthProvider";
+import { AuthNavigation } from "@/components/AuthNavigation/AuthNavigation";
 
-const roboto = Roboto({
-  weight: ['400', '500', '700'],
-  subsets: ['latin', 'cyrillic'],
-  display: 'swap',
-  variable: '--font-roboto',
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'NoteHub',
-  description: 'NoteHub is a simple and efficient application for managing personal notes. Keep your thoughts organized and accessible in one place.',
-  openGraph: {
-    title: 'NoteHub',
-    description: 'NoteHub is a simple and efficient application for managing personal notes. Keep your thoughts organized and accessible in one place.',
-    url: 'https://notehub.app',
-    images: ['https://ac.goit.global/fullstack/react/notehub-og-meta.jpg'],
-  },
+  title: "NoteHub",
+  description: "Manage your notes efficiently",
 };
 
-export default function RootLayout({ children, modal }: { children: ReactNode; modal: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" className={roboto.variable}>
-      <body>
-        <TanStackProvider>
-          <Header />
+    <html lang="en">
+      <body className={inter.className}>
+        <AuthProvider>
+          <header style={{ padding: '1rem', borderBottom: '1px solid #ccc' }}>
+            <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <a href="/" style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>NoteHub</a>
+              <AuthNavigation />
+            </nav>
+          </header>
           {children}
-          {modal}
-          <Footer />
-        </TanStackProvider>
+        </AuthProvider>
       </body>
     </html>
   );
