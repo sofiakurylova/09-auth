@@ -47,14 +47,18 @@ export default function EditProfilePage() {
 
   const handleCancel = () => router.push('/profile');
 
-  if (isLoading) return <main className={css.mainContent}><p>Loading...</p></main>;
+  if (isLoading) {
+    return <main className={css.mainContent}><p>Loading...</p></main>;
+  }
+
+  const avatarUrl = user?.avatar || 'https://ac.goit.global/fullstack/react/default-avatar.png'\;
 
   return (
     <main className={css.mainContent}>
       <div className={css.profileCard}>
         <h1 className={css.formTitle}>Edit Profile</h1>
         <Image
-          src={user?.avatar || 'https://ac.goit.global/fullstack/react/default-avatar.png'\}
+          src={avatarUrl}
           alt="User Avatar"
           width={120}
           height={120}
@@ -63,12 +67,22 @@ export default function EditProfilePage() {
         <form className={css.profileInfo} onSubmit={handleSubmit}>
           <div className={css.usernameWrapper}>
             <label htmlFor="username">Username:</label>
-            <input id="username" type="text" className={css.input} value={username} onChange={(e) => setUsername(e.target.value)} />
+            <input
+              id="username"
+              type="text"
+              className={css.input}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
           </div>
           <p>Email: {user?.email || 'Not available'}</p>
           <div className={css.actions}>
-            <button type="submit" className={css.saveButton} disabled={isSaving}>{isSaving ? 'Saving...' : 'Save'}</button>
-            <button type="button" className={css.cancelButton} onClick={handleCancel}>Cancel</button>
+            <button type="submit" className={css.saveButton} disabled={isSaving}>
+              {isSaving ? 'Saving...' : 'Save'}
+            </button>
+            <button type="button" className={css.cancelButton} onClick={handleCancel}>
+              Cancel
+            </button>
           </div>
         </form>
       </div>

@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 
 export default async function ProfilePage() {
   const user = await getMe();
+  const avatarUrl = user?.avatar || 'https://ac.goit.global/fullstack/react/default-avatar.png'\;
 
   return (
     <main className={css.mainContent}>
@@ -29,7 +30,7 @@ export default async function ProfilePage() {
         </div>
         <div className={css.avatarWrapper}>
           <Image
-            src={user?.avatar || 'https://ac.goit.global/fullstack/react/default-avatar.png'\}
+            src={avatarUrl}
             alt="User Avatar"
             width={120}
             height={120}
