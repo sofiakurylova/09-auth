@@ -1,33 +1,47 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { AuthProvider } from "@/components/AuthProvider/AuthProvider";
-import { AuthNavigation } from "@/components/AuthNavigation/AuthNavigation";
+import type { Metadata } from 'next';
+import { Roboto } from 'next/font/google';
+import { ReactNode } from 'react';
+import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
+import AuthProvider from '@/components/AuthProvider/AuthProvider';
+import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
+import './globals.css';
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({
+  weight: ['400', '500', '700'],
+  subsets: ['latin', 'cyrillic'],
+  display: 'swap',
+  variable: '--font-roboto',
+});
 
 export const metadata: Metadata = {
-  title: "NoteHub",
-  description: "Manage your notes efficiently",
+  title: 'NoteHub',
+  description: 'NoteHub is a simple and efficient application for managing personal notes.',
+  openGraph: {
+    title: 'NoteHub',
+    description: 'NoteHub is a simple and efficient application for managing personal notes.',
+    url: 'https://notehub.app',
+    images: ['https://ac.goit.global/fullstack/react/notehub-og-meta.jpg'],
+  },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+interface RootLayoutProps {
+  children: ReactNode;
+  modal: ReactNode;
+}
+
+export default function RootLayout({ children, modal }: RootLayoutProps) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <AuthProvider>
-          <header style={{ padding: '1rem', borderBottom: '1px solid #ccc' }}>
-            <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <a href="/" style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>NoteHub</a>
-              <AuthNavigation />
-            </nav>
-          </header>
-          {children}
-        </AuthProvider>
+    <html lang="en" className={roboto.variable}>
+      <body>
+        <TanStackProvider>
+          <AuthProvider>
+            <Header />
+            {children}
+            {modal}
+            <Footer />
+          </AuthProvider>
+        </TanStackProvider>
       </body>
     </html>
   );
