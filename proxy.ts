@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
-import { api } from '@/lib/api/api';
+import { checkSession } from './lib/api/serverApi';
 import { parse } from 'cookie';
 
 const privateRoutes = ['/profile', '/notes'];
@@ -18,9 +18,7 @@ export async function proxy(request: NextRequest) {
 
   if (accessToken === undefined && refreshToken) {
     try {
-      const sessionResponse = await api.get('/auth/session', {
-        headers: { Cookie: cookieStore.toString() },
-      });
+      const sessionResponse = await checkSession();
 
       if (sessionResponse.status === 200) {
         isAuthenticated = true;
