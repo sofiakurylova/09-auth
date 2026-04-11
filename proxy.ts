@@ -52,7 +52,7 @@ export async function proxy(request: NextRequest) {
           const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route));
 
           if (isAuthRoute && isAuthenticated) {
-            const redirectResponse = NextResponse.redirect(new URL('/profile', request.url));
+            const redirectResponse = NextResponse.redirect(new URL('/', request.url));
             for (const cookieStr of cookieArray) {
               const parsed = parse(cookieStr);
               if (parsed.accessToken) {
@@ -91,7 +91,7 @@ export async function proxy(request: NextRequest) {
   }
 
   if (isAuthRoute && isAuthenticated) {
-    return NextResponse.redirect(new URL('/profile', request.url));
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
   return NextResponse.next();
